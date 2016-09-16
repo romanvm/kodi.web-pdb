@@ -14,22 +14,13 @@ import sys
 import traceback
 from contextlib import contextmanager
 from pdb import Pdb
+import xbmc
+from xbmcgui import Dialog
 from .web_console import WebConsole
 
 __all__ = ['WebPdb', 'set_trace', 'post_mortem', 'catch_post_mortem']
 
 __version__ = '1.0.0'
-
-
-# This function is added for compatibility with Python 2
-def getsourcelines(obj):
-    lines, lineno = inspect.findsource(obj)
-    if inspect.isframe(obj) and obj.f_globals is obj.f_locals:
-        # must be a module frame: do not try to cut a block out of it
-        return lines, 1
-    elif inspect.ismodule(obj):
-        return lines, 1
-    return inspect.getblock(lines[lineno:]), lineno + 1
 
 
 class WebPdb(Pdb):
@@ -79,22 +70,6 @@ class WebPdb(Pdb):
         return Pdb.do_quit(self, arg)
 
     do_q = do_exit = do_quit
-
-    def do_longlist(self, arg):
-        """longlist | ll
-        List the whole source code for the current function or frame.
-        """
-        # This command is added here for Python 2
-        filename = self.curframe.f_code.co_filename
-        breaklist = self.get_file_breaks(filename)
-        try:
-            lines, lineno = getsourcelines(self.curframe)
-        except OSError as err:
-            self.error(err)
-            return
-        self._print_lines(lines, lineno, breaklist, self.curframe)
-
-    do_ll = do_longlist
 
     def get_current_frame_data(self):
         """
@@ -238,4 +213,9 @@ def catch_post_mortem(host='', port=5555, patch_stdstreams=False):
     try:
         yield
     except:
+        xbmc.log('Web-PDB: unhandled exception detected:\n{0}'.format(traceback.format_exc()), xbmc.LOGERROR)
+        xbmc.log('Web-PDB: starting post-mortem debugging...', xbmc.LOGERROR)
+        Dialog().notification('Web-PDB',
+                              'Addon error! Starting post-mortem debugging.',
+                              icon='error')
         post_mortem(None, host, port, patch_stdstreams)

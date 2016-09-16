@@ -16,6 +16,8 @@ try:
 except ImportError:
     import Queue as queue
 from wsgiref.simple_server import make_server, WSGIRequestHandler
+import xbmc
+from xbmcgui import DialogProgressBG
 from .wsgi_app import app
 
 __all__ = ['WebConsole']
@@ -69,7 +71,6 @@ class WebConsole(object):
         self._stop_all = Event()
         self._server_process = Thread(target=self._run_server, args=(host, port))
         self._server_process.daemon = True
-        print('Web-PDB: starting web-server on {0}:{1}...'.format(gethostname(), port))
         self._server_process.start()
 
     @property
@@ -87,12 +88,20 @@ class WebConsole(object):
         app.frame_data = self._frame_data
         httpd = make_server(host, port, app, handler_class=SilentWSGIRequestHandler)
         httpd.timeout = 0.1
-        while not self._stop_all.is_set():
+        hostname = gethostname()
+        xbmc.log('Web-PDB: starting web-server on {0}:{1}...'.format(hostname, port),
+                 xbmc.LOGNOTICE)
+        dialog = DialogProgressBG()
+        dialog.create('Web-PDB', 'Web-UI opened at {0}:{1}...'.format(hostname, port))
+        dialog.update(100)
+        while not (self._stop_all.is_set() or xbmc.abortRequested):
             httpd.handle_request()
         httpd.socket.close()
+        xbmc.log('Web-PDB: web-server stopped.', xbmc.LOGNOTICE)
+        dialog.close()
 
     def readline(self):
-        while not self._stop_all.is_set():
+        while not (self._stop_all.is_set() or xbmc.abortRequested):
             try:
                 data = self._in_queue.get(timeout=0.1)
                 break
@@ -139,10 +148,9 @@ class WebConsole(object):
             time.sleep(0.1)
 
     def close(self):
-        print('Web-PDB: stopping web-server...')
+        xbmc.log('Web-PDB: stopping web-server...', xbmc.LOGNOTICE)
         self._stop_all.set()
         self._server_process.join()
-        print('Web-PDB: web-server stopped.')
 
     @property
     def closed(self):
