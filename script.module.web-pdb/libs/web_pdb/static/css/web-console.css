@@ -18,3 +18,11 @@ html, body {
   color: red;
   font-weight: bold;
 }
+
+.filename {
+  font-size: 0.85em;
+}
+
+.navbar-text {
+  font-weight: bold;
+}
