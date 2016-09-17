@@ -146,7 +146,7 @@ class WebConsole(object):
         i = 0
         while self._history.is_dirty and i <= 5:
             i += 1
-            time.sleep(0.1)
+            time.sleep(0.2)
 
     def close(self):
         xbmc.log('Web-PDB: stopping web-server...', xbmc.LOGNOTICE)
