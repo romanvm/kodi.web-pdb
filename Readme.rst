@@ -35,12 +35,13 @@ to start debugging:
 
   import web_pdb; web_pdb.set_trace()
 
-The ``set_trace()`` call will suspend your program and open a web-UI at the default port ``5555``
-(port value can be changed). Enter in your browser's address bar:
-``http://<your Kodi machine hostname or IP>:5555``,
-for example ``http://monty-python:5555``,
-and you should see the Web-PDB UI. Now you can use all PDB commands and features.
-Additional **Current file** and **Variables** information boxes help you better track your program runtime state.
+The ``set_trace()`` call will suspend your addon and open a web-UI at the default port ``5555``
+(port value can be changed). At the same time a notification will be displayed in Kodi,
+incluing ``host:port`` to connect to. Enter in your browser's address bar:
+``http://<your Kodi machine hostname or IP>:5555``, for example ``http://monty-python:5555``,
+and you should see the Web-PDB UI like on the preceding screenshot.
+Now you can use all PDB commands and features. Additional **Current file** and **Variables**
+information boxes help you better track your program runtime state.
 
 **Warning**: it is strongly recommended to work with the Web-PDB web-UI only in one browser session.
 With more than one browser window accessing the web-UI it can display incorrect data in one or more
