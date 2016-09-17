@@ -68,8 +68,13 @@ License
 
 MIT license, see ``LICENSE.txt``.
 
+The debugger icon made by `Freepik`_ from `www.flaticon.com`_ is licensed by `CC 3.0 BY`_.
+
 .. _Web-PDB: https://github.com/romanvm/python-web-pdb
 .. _Kodi mediacenter: https://kodi.tv
 .. _PDB: https://docs.python.org/2/library/pdb.html
 .. _Releases: https://github.com/romanvm/kodi.web-pdb/releases
+.. _Freepik: http://www.freepik.com
+.. _www.flaticon.com: http://www.flaticon.com
+.. _CC 3.0 BY: http://creativecommons.org/licenses/by/3.0/
 
