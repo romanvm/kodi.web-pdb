@@ -7,6 +7,7 @@ A web-interface for Python's built-in PDB debugger
 
 from __future__ import absolute_import
 import inspect
+import os
 import sys
 import traceback
 from contextlib import contextmanager
@@ -81,16 +82,31 @@ class WebPdb(Pdb):
         filename = self.curframe.f_code.co_filename
         lines, start_line = inspect.findsource(self.curframe)
         return {
-            'filename': filename,
+            'filename': os.path.basename(filename),
             'listing': ''.join(lines),
             'curr_line': self.curframe.f_lineno,
             'total_lines': len(lines),
             'breaklist': self.get_file_breaks(filename),
         }
 
-    def get_variables(self):
+    def _format_variables(self, raw_vars):
+        f_vars = []
+        for var, value in raw_vars.items():
+            if var.startswith('__') and var.endswith('__'):
+                continue
+            repr_value = repr(value)
+            if sys.version_info[0] == 2:
+                # Try to convert Unicode string to human-readable form
+                try:
+                    repr_value = repr_value.decode('raw_unicode_escape').encode('utf-8')
+                except UnicodeError:
+                    pass
+            f_vars.append('{0} = {1}'.format(var, repr_value))
+        return '\n'.join(sorted(f_vars))
+
+    def get_globals(self):
         """
-        Get a listing of all variables in the current scope
+        Get the listing of global variables in the current scope
 
         .. note:: special variables that start and end with
             double underscores ``__`` are not included.
@@ -98,18 +114,20 @@ class WebPdb(Pdb):
         :return: a listing of ``var = value`` pairs sorted alphabetically
         :rtype: str
         """
-        raw_vars = {}
-        raw_vars.update(self.curframe.f_globals)
-        raw_vars.update(self.curframe.f_locals)
-        f_vars = []
-        for var, value in raw_vars.items():
-            if var.startswith('__') and var.endswith('__'):
-                continue
-            repr_value = repr(value)
-            if sys.version_info[0] == 2:
-                repr_value = repr_value.decode('raw_unicode_escape').encode('utf-8')
-            f_vars.append('{0} = {1}'.format(var, repr_value))
-        return '\n'.join(sorted(f_vars))
+        return self._format_variables(self.curframe.f_globals)
+
+    def get_locals(self):
+        """
+        Get the listing of local variables in the current scope
+
+        .. note:: special variables that start and end with
+            double underscores ``__`` are not included.
+            For module scope globals and locals listings are the same.
+
+        :return: a listing of ``var = value`` pairs sorted alphabetically
+        :rtype: str
+        """
+        return self._format_variables(self.curframe.f_locals)
 
 
 def set_trace(host='', port=5555, patch_stdstreams=False):
