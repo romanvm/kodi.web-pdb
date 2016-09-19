@@ -41,6 +41,8 @@ from .wsgi_app import app
 
 __all__ = ['WebConsole']
 
+kodi_monitor = xbmc.Monitor()
+
 
 class SilentWSGIRequestHandler(WSGIRequestHandler):
     """WSGI request handler with logging disabled"""
@@ -115,14 +117,14 @@ class WebConsole(object):
         dialog = DialogProgressBG()
         dialog.create('Web-PDB', 'Web-UI opened at {0}:{1}...'.format(hostname, port))
         dialog.update(100)
-        while not (self._stop_all.is_set() or xbmc.abortRequested):
+        while not (self._stop_all.is_set() or kodi_monitor.abortRequested()):
             httpd.handle_request()
         httpd.socket.close()
         xbmc.log('Web-PDB: web-server stopped.', xbmc.LOGNOTICE)
         dialog.close()
 
     def readline(self):
-        while not (self._stop_all.is_set() or xbmc.abortRequested):
+        while not (self._stop_all.is_set() or kodi_monitor.abortRequested()):
             try:
                 data = self._in_queue.get(timeout=0.1)
                 break
@@ -167,7 +169,7 @@ class WebConsole(object):
         in case a browser session is closed.
         """
         i = 0
-        while self._history.is_dirty and i <= 5:
+        while self._history.is_dirty and i <= 5 and not kodi_monitor.abortRequested():
             i += 1
             time.sleep(0.2)
 
