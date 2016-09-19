@@ -94,6 +94,8 @@ class WebPdb(Pdb):
         """Gracefully close console if continue without breakpoints"""
         Pdb.set_continue(self)
         if not self.breaks:
+            # Close the web-console explicitly if no breaks.
+            # Otherwise it will hang-up in Kodi.
             self.console.close()
 
     def get_current_frame_data(self):
@@ -180,6 +182,12 @@ def set_trace(host='', port=5555, patch_stdstreams=False):
     :raises RuntimeError: if there is an active Web-PDB session
     """
     if WebPdb.active_instance is not None:
+        # Kodi seems not to honor daemonic threads so we need to close
+        # the web-console explicitly if we continue without
+        # breakpoints. Otherwise the web-console won't stop and hangs.
+        # Because of this multiple set_trace() calls won't work correctly in Kodi.
+        # Maybe I'll find a solution in the future,
+        # but for now multiple set_trace() calls are forbidden.
         raise RuntimeError('Multiple set_trace() calls in Web-PDB for Kodi are not allowed!'
                            'Use breakpoints instead.')
     pdb = WebPdb(host, port, patch_stdstreams)
