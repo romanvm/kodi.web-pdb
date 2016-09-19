@@ -28,6 +28,7 @@ File-like web-based input/output console
 from __future__ import absolute_import
 import sys
 import time
+import weakref
 from socket import gethostname
 from threading import Thread, Event, Lock
 try:
@@ -84,7 +85,7 @@ class WebConsole(object):
     A file-like class for exchanging data between PDB and the web-UI
     """
     def __init__(self, host, port, debugger):
-        self._debugger = debugger
+        self._debugger = weakref.proxy(debugger)
         self._history = ThreadSafeBuffer('')
         self._globals = ThreadSafeBuffer('')
         self._locals = ThreadSafeBuffer('')
