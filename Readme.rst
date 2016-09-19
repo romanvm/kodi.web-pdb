@@ -45,11 +45,12 @@ If everything is OK, you should see the Web-PDB UI like on the preceding screens
 Now you can use all PDB commands and features. Additional **Current file**, **Globals** and **Locals**
 information boxes help you better track your program runtime state.
 
-**Warning**: it is strongly recommended to work with the Web-PDB web-UI only in one browser session.
+**Note**: it is strongly recommended to work with the Web-PDB web-UI only in one browser session.
 With more than one browser window accessing the web-UI it can display incorrect data in one or more
 browser sessions.
 
-Subsequent ``set_trace()`` calls can be used as hardcoded breakpoints.
+**Warning**: unlike in the regular Web-PDB, in ``script.module.web-pdb``
+multiple ``set_trace()`` calls are not allowed and will raise ``RuntimeError`` exceptions.
 
 Additionally, Web-PDB provides ``catch_post_mortem`` context manager that can catch
 unhandled exceptions raised within its scope and automatically start PDB post-mortem debugging session.
@@ -79,4 +80,3 @@ The debugger icon made by `Freepik`_ from `www.flaticon.com`_ is licensed by `CC
 .. _Freepik: http://www.freepik.com
 .. _www.flaticon.com: http://www.flaticon.com
 .. _CC 3.0 BY: http://creativecommons.org/licenses/by/3.0/
-

@@ -175,12 +175,14 @@ def set_trace(host='', port=5555, patch_stdstreams=False):
     :param port: web-UI port
     :type port: int
     :param patch_stdstreams: redirect all standard input and output
-        streams to the web-UI.
+        streams to the web-UI
     :type patch_stdstreams: bool
+    :raises RuntimeError: if there is an active Web-PDB session
     """
-    pdb = WebPdb.active_instance
-    if pdb is None:
-        pdb = WebPdb(host, port, patch_stdstreams)
+    if WebPdb.active_instance is not None:
+        raise RuntimeError('Multiple set_trace() calls in Web-PDB for Kodi are not allowed!'
+                           'Use breakpoints instead.')
+    pdb = WebPdb(host, port, patch_stdstreams)
     pdb.set_trace(sys._getframe().f_back)
 
 
