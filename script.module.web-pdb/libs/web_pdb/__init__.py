@@ -91,11 +91,14 @@ class WebPdb(Pdb):
     do_q = do_exit = do_quit
 
     def set_continue(self):
-        """Gracefully close console if continue without breakpoints"""
+        """
+        Gracefully close console if continue without breakpoints
+
+        This is needed because Kodi does not respect
+        daemonic threads
+        """
         Pdb.set_continue(self)
         if not self.breaks:
-            # Close the web-console explicitly if no breaks.
-            # Otherwise it will hang-up in Kodi.
             self.console.close()
 
     def get_current_frame_data(self):
