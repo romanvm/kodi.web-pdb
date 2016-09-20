@@ -188,7 +188,7 @@ def set_trace(host='', port=5555, patch_stdstreams=False):
 
         import web_pdb;web_pdb.set_trace()
 
-    Subsequent :func:`set_trace` calls can be used as hardcoded breakpoints.
+    .. warning:: Multiple :func:`set_trace` calls are forbidden.
 
     :param host: web-UI hostname or IP-address
     :type host: str
@@ -197,10 +197,18 @@ def set_trace(host='', port=5555, patch_stdstreams=False):
     :param patch_stdstreams: redirect all standard input and output
         streams to the web-UI
     :type patch_stdstreams: bool
+    :raises RuntimeError: on attempt to call :func:`set_trace` again.
     """
     pdb = WebPdb.active_instance
     if pdb is None:
         pdb = WebPdb(host, port, patch_stdstreams)
+    elif pdb.console.closed:
+        # Closing the web-console breaks the connection with the front-end,
+        # so if we re-open the web-console again there is no guarantee that
+        # the connection will still be present. It's better to prevent
+        # such undefined behavior.
+        raise RuntimeError('Web-PDB console is closed and cannot be re-opened!\n'
+                           'Multiple set_trace() calls in Web-PDB for Kodi are not allowed!')
     pdb.set_trace(sys._getframe().f_back)
 
 
