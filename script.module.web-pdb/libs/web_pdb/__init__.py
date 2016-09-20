@@ -31,7 +31,6 @@ import os
 import sys
 import traceback
 from contextlib import contextmanager
-from bdb import Bdb
 if sys.version_info[0] == 2:
     from .pdb_py2 import PdbPy2 as Pdb
 else:
@@ -114,7 +113,7 @@ class WebPdb(Pdb):
         if frame.f_back is None and not self.console.closed:
             self.console.flush()
             self.console.close()
-        return Bdb.dispatch_return(self, frame, arg)
+        return Pdb.dispatch_return(self, frame, arg)
 
     def get_current_frame_data(self):
         """
