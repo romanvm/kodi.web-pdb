@@ -49,8 +49,7 @@ information boxes help you better track your program runtime state.
 With more than one browser window accessing the web-UI it can display incorrect data in one or more
 browser sessions.
 
-**Warning**: unlike in the regular Web-PDB, in ``script.module.web-pdb``
-multiple ``set_trace()`` calls are not allowed and will raise ``RuntimeError`` exceptions.
+Subsequent ``set_trace()`` calls can be used as hardcoded breakpoints.
 
 Additionally, Web-PDB provides ``catch_post_mortem`` context manager that can catch
 unhandled exceptions raised within its scope and automatically start PDB post-mortem debugging session.
