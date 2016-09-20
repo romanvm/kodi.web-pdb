@@ -8,8 +8,10 @@ Except for modifications needed to run inside Kodi, all other Web-PDB/PDB functi
 so you can use all available documentation and tutorials for the PDB debugger
 to learn how to debug your Python code.
 
-.. figure:: https://raw.githubusercontent.com/romanvm/python-web-pdb/master/screenshot.jpg
+.. figure:: https://raw.githubusercontent.com/romanvm/python-web-pdb/master/screenshot.png
   :alt: Web-PDB screenshot
+  :width: 640px
+  :height: 490px
 
   *Web-PDB console in Chrome browser*
 
