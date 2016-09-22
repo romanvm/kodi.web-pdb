@@ -26,7 +26,6 @@ File-like web-based input/output console
 """
 
 from __future__ import absolute_import
-import sys
 import time
 import weakref
 from socket import gethostname
@@ -142,7 +141,7 @@ class WebConsole(object):
         return [self.readline()]
 
     def writeline(self, data):
-        if sys.version_info[0] == 2 and isinstance(data, unicode):
+        if isinstance(data, unicode):
             data = data.encode('utf-8')
         self._history.contents += data
         try:
