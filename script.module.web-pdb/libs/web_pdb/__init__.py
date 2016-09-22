@@ -50,31 +50,15 @@ class WebPdb(Pdb):
     """
     active_instance = None
 
-    def __init__(self, host='', port=5555, patch_stdstreams=False):
+    def __init__(self, host='', port=5555):
         """
         :param host: web-UI hostname or IP-address
         :type host: str
         :param port: web-UI port
         :type port: int
-        :param patch_stdstreams: redirect all standard input and output
-            streams to the web-UI.
-        :type patch_stdstreams: bool
         """
         self.console = WebConsole(host, port, self)
         Pdb.__init__(self, stdin=self.console, stdout=self.console)
-        # Borrowed from here: https://github.com/ionelmc/python-remote-pdb
-        self._backup = []
-        if patch_stdstreams:
-            for name in (
-                    'stderr',
-                    'stdout',
-                    '__stderr__',
-                    '__stdout__',
-                    'stdin',
-                    '__stdin__',
-            ):
-                self._backup.append((name, getattr(sys, name)))
-                setattr(sys, name, self.console)
         WebPdb.active_instance = self
 
     def do_quit(self, arg):
@@ -82,8 +66,6 @@ class WebPdb(Pdb):
         quit || exit || q
         Stop and quit the current debugging session
         """
-        for name, fh in self._backup:
-            setattr(sys, name, fh)
         self.console.flush()
         self.console.close()
         WebPdb.active_instance = None
@@ -175,7 +157,7 @@ class WebPdb(Pdb):
         return self._format_variables(self.curframe.f_locals)
 
 
-def set_trace(host='', port=5555, patch_stdstreams=False):
+def set_trace(host='', port=5555):
     """
     Start the debugger
 
@@ -193,14 +175,11 @@ def set_trace(host='', port=5555, patch_stdstreams=False):
     :type host: str
     :param port: web-UI port
     :type port: int
-    :param patch_stdstreams: redirect all standard input and output
-        streams to the web-UI
-    :type patch_stdstreams: bool
     :raises RuntimeError: on attempt to call :func:`set_trace` again.
     """
     pdb = WebPdb.active_instance
     if pdb is None:
-        pdb = WebPdb(host, port, patch_stdstreams)
+        pdb = WebPdb(host, port)
     elif pdb.console.closed:
         # Closing the web-console breaks the connection with the front-end,
         # so if we re-open the web-console again there is no guarantee that
@@ -211,7 +190,7 @@ def set_trace(host='', port=5555, patch_stdstreams=False):
     pdb.set_trace(sys._getframe().f_back)
 
 
-def post_mortem(tb=None, host='', port=5555, patch_stdstreams=False):
+def post_mortem(tb=None, host='', port=5555):
     """
     Start post-mortem debugging for the provided traceback object
 
@@ -232,9 +211,6 @@ def post_mortem(tb=None, host='', port=5555, patch_stdstreams=False):
     :type host: str
     :param port: web-UI port
     :type port: int
-    :param patch_stdstreams: redirect all standard input and output
-        streams to the web-UI.
-    :type patch_stdstreams: bool
     :raises RuntimeError: if there is an active WebPdb instance
     :raises ValueError: if no valid traceback is provided and the Python
         interpreter is not handling any exception
@@ -252,7 +228,7 @@ def post_mortem(tb=None, host='', port=5555, patch_stdstreams=False):
     if tb is None:
         raise ValueError('A valid traceback must be passed if no '
                          'exception is being handled')
-    p = WebPdb(host, port, patch_stdstreams)
+    p = WebPdb(host, port)
     p.console.writeline('Web-PDB post-mortem:\n')
     p.console.writeline(''.join(exc_data))
     p.reset()
@@ -260,7 +236,7 @@ def post_mortem(tb=None, host='', port=5555, patch_stdstreams=False):
 
 
 @contextmanager
-def catch_post_mortem(host='', port=5555, patch_stdstreams=False):
+def catch_post_mortem(host='', port=5555):
     """
     A context manager for tracking potentially error-prone code
 
@@ -277,9 +253,6 @@ def catch_post_mortem(host='', port=5555, patch_stdstreams=False):
     :type host: str
     :param port: web-UI port
     :type port: int
-    :param patch_stdstreams: redirect all standard input and output
-        streams to the web-UI.
-    :type patch_stdstreams: bool
     :raises RuntimeError: if there is an active WebPdb instance
     """
     try:
@@ -290,4 +263,4 @@ def catch_post_mortem(host='', port=5555, patch_stdstreams=False):
         Dialog().notification('Web-PDB',
                               'Addon error! Starting post-mortem debugging.',
                               icon='error')
-        post_mortem(None, host, port, patch_stdstreams)
+        post_mortem(None, host, port)
