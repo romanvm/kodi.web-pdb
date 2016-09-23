@@ -91,9 +91,9 @@ class WebConsole(object):
         self._frame_data = ThreadSafeBuffer()
         self._in_queue = queue.Queue()
         self._stop_all = Event()
-        self._server_process = Thread(target=self._run_server, args=(host, port))
-        self._server_process.daemon = True
-        self._server_process.start()
+        self._server_thread = Thread(target=self._run_server, args=(host, port))
+        self._server_thread.daemon = True
+        self._server_thread.start()
 
     @property
     def seekable(self):
@@ -176,7 +176,7 @@ class WebConsole(object):
     def close(self):
         xbmc.log('Web-PDB: stopping web-server...', xbmc.LOGNOTICE)
         self._stop_all.set()
-        self._server_process.join()
+        self._server_thread.join()
 
     @property
     def closed(self):
