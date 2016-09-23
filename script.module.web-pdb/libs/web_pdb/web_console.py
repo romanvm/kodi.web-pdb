@@ -29,7 +29,7 @@ from __future__ import absolute_import
 import time
 import weakref
 from socket import gethostname
-from threading import Thread, Event, Lock
+from threading import Thread, Event, RLock
 try:
     import queue
 except ImportError:
@@ -55,7 +55,7 @@ class ThreadSafeBuffer(object):
     A buffer for data exchange between threads
     """
     def __init__(self, contents=None):
-        self._lock = Lock()
+        self._lock = RLock()
         self._contents = contents
         self._is_dirty = contents is not None
 
