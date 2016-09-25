@@ -8,6 +8,9 @@
     <import addon="script.module.bottle" version="0.12.0"/>
   </requires>
   <extension point="xbmc.python.module" library="libs" />
+  <extension point="xbmc.python.script" library="main.py">
+    <provides>executable</provides>
+  </extension>
   <extension point="xbmc.addon.metadata">
     <summary>Remote web-UI for Python PDB debugger</summary>
     <description>Provides a web-UI for Python's built-in PDB debugger for remote debugging addons for Kodi.</description>

@@ -1,0 +1,12 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+
+msgctxt "#32000"
+msgid "Web-based remote Python debugger:"
+msgstr ""
