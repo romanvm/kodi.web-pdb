@@ -12,8 +12,8 @@
     <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>Remote web-UI for Python PDB debugger</summary>
-    <description>Provides a web-UI for Python's built-in PDB debugger for remote debugging addons for Kodi.</description>
+    <summary>Web-based remote Python debugger</summary>
+    <description>Provides a web-UI for Python's built-in PDB debugger for remote debugging Kodi addons.</description>
     <platform>all</platform>
     <license>MIT</license>
     <source>https://github.com/romanvm/kodi.web-pdb</source>
