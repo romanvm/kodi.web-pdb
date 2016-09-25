@@ -92,5 +92,6 @@ ENV/
 
 # Custom
 .idea/
+venv/
 *.zip
 *.cmd
