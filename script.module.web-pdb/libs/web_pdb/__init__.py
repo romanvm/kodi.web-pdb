@@ -63,6 +63,7 @@ class WebPdb(Pdb):
         quit || exit || q
         Stop and quit the current debugging session
         """
+        self.console.writeline('*** Aborting addon ***\n')
         self.console.flush()
         self.console.close()
         WebPdb.active_instance = None
@@ -71,16 +72,8 @@ class WebPdb(Pdb):
     do_q = do_exit = do_quit
 
     def set_continue(self):
-        """
-        Gracefully close the web-console if continue without breakpoints
-
-        This is needed because Kodi does not respect
-        daemon threads.
-        """
-        Pdb.set_continue(self)
-        if not self.breaks:
-            self.console.flush()
-            self.console.close()
+        # Don't stop except at breakpoints or when finished
+        self._set_stopinfo(self.botframe, None, -1)
 
     def dispatch_return(self, frame, arg):
         """
@@ -91,6 +84,7 @@ class WebPdb(Pdb):
         daemon threads.
         """
         if frame.f_back is None and not self.console.closed:
+            self.console.writeline('*** Addon finished ***')
             self.console.flush()
             self.console.close()
         return Pdb.dispatch_return(self, frame, arg)
@@ -165,13 +159,12 @@ def set_trace(host='', port=5555):
 
         import web_pdb;web_pdb.set_trace()
 
-    .. warning:: Multiple :func:`set_trace` calls are forbidden.
+    Subsequent :func:`set_trace` calls can be used as hardcoded breakpoints.
 
     :param host: web-UI hostname or IP-address
     :type host: str
     :param port: web-UI port
     :type port: int
-    :raises RuntimeError: on attempt to call :func:`set_trace` again.
     """
     pdb = WebPdb.active_instance
     if pdb is None:
