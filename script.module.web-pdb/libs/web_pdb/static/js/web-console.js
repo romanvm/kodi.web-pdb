@@ -84,7 +84,7 @@ $(function()
           }
           else
           {
-            send_command('b ' + line_number);
+            send_command('b ' + data.frame_data.filename + ':'+ line_number);
           }
         };
         if (data.frame_data.breaklist.indexOf(i + 1) != -1)
@@ -108,7 +108,7 @@ $(function()
 
   function resize_console()
   {
-    var con_height = $(window).height() - 480;
+    var con_height = $(window).height() - 490;
     if (con_height <= 240)
     {
       con_height = 240;
@@ -164,7 +164,8 @@ $(function()
     {
       url: 'input',
       data: input + '\n',
-      method: 'POST'
+      method: 'POST',
+      contentType: 'text/plain; charset=UTF-8'
     })
     .done(function()
     {
