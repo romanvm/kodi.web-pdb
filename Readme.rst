@@ -40,6 +40,12 @@ to start debugging:
 The ``set_trace()`` call will suspend your addon and open a web-UI at the default port ``5555``
 (port value can be changed). At the same time a notification will be displayed in Kodi,
 indicating that a debug session is active. The notification also shows web-UI host/port.
+
+.. figure:: https://raw.githubusercontent.com/romanvm/kodi.web-pdb/master/kodi_message.png
+  :alt: Kodi notification
+
+  *Notification in Kodi that a Web-PDB debugging session is active*
+
 Enter in your the address bar of your browser: ``http://<your Kodi machine hostname or IP>:5555``,
 for example ``http://monty-python:5555``. Use ``127.0.0.1`` or ``localhost`` as hostname
 if you are connecting from the same machine that runs Kodi.
