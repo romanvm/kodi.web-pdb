@@ -30,6 +30,7 @@ import inspect
 import os
 import sys
 import traceback
+import random
 from contextlib import contextmanager
 from .pdb_py2 import PdbPy2 as Pdb
 import xbmc
@@ -51,9 +52,16 @@ class WebPdb(Pdb):
         """
         :param host: web-UI hostname or IP-address
         :type host: str
-        :param port: web-UI port
+        :param port: web-UI port. If ``port=-1``, choose a random port value
+            between 32768 and 65536.
         :type port: int
+        :param patch_stdstreams: redirect all standard input and output
+            streams to the web-UI.
+        :type patch_stdstreams: bool
         """
+        if port == -1:
+            random.seed()
+            port = random.randint(32768, 65536)
         self.console = WebConsole(host, port, self)
         Pdb.__init__(self, stdin=self.console, stdout=self.console)
         WebPdb.active_instance = self
@@ -146,6 +154,19 @@ class WebPdb(Pdb):
         """
         return self._format_variables(self.curframe.f_locals)
 
+    def remove_trace(self, frame=None):
+        """
+        Detach the debugger from the execution stack
+
+        :param frame: the lowest frame to detach the debugger from.
+        """
+        sys.settrace(None)
+        if frame is None:
+            frame = self.curframe
+        while frame and frame is not self.botframe:
+            del frame.f_trace
+            frame = frame.f_back
+
 
 def set_trace(host='', port=5555):
     """
@@ -163,19 +184,16 @@ def set_trace(host='', port=5555):
 
     :param host: web-UI hostname or IP-address
     :type host: str
-    :param port: web-UI port
+    :param port: web-UI port. If ``port=-1``, choose a random port value
+     between 32768 and 65536.
     :type port: int
     """
     pdb = WebPdb.active_instance
     if pdb is None:
         pdb = WebPdb(host, port)
-    elif pdb.console.closed:
-        # Closing the web-console breaks the connection with the front-end,
-        # so if we re-open the web-console again there is no guarantee that
-        # the connection will still be present. It's better to prevent
-        # such undefined behavior.
-        raise RuntimeError('Web-PDB console is closed and cannot be re-opened!\n'
-                           'Multiple set_trace() calls in Web-PDB for Kodi are not allowed!')
+    else:
+        # If the debugger is still attached reset trace to a new location
+        pdb.remove_trace()
     pdb.set_trace(sys._getframe().f_back)
 
 
@@ -198,14 +216,12 @@ def post_mortem(tb=None, host='', port=5555):
     :type tb: types.TracebackType
     :param host: web-UI hostname or IP-address
     :type host: str
-    :param port: web-UI port
+    :param port: web-UI port. If ``port=-1``, choose a random port value
+        between 32768 and 65536.
     :type port: int
-    :raises RuntimeError: if there is an active WebPdb instance
     :raises ValueError: if no valid traceback is provided and the Python
         interpreter is not handling any exception
     """
-    if WebPdb.active_instance is not None:
-        raise RuntimeError('No active WebPdb instances allowed when doing post-mortem!')
     # handling the default
     if tb is None:
         # sys.exc_info() returns (type, value, traceback) if an exception is
@@ -217,11 +233,15 @@ def post_mortem(tb=None, host='', port=5555):
     if tb is None:
         raise ValueError('A valid traceback must be passed if no '
                          'exception is being handled')
-    p = WebPdb(host, port)
-    p.console.writeline('Web-PDB post-mortem:\n')
-    p.console.writeline(''.join(exc_data))
-    p.reset()
-    p.interaction(None, tb)
+    pdb = WebPdb.active_instance
+    if pdb is None:
+        pdb = WebPdb(host, port)
+    else:
+        pdb.remove_trace()
+    pdb.console.writeline('*** Web-PDB post-mortem ***\n')
+    pdb.console.writeline(''.join(exc_data))
+    pdb.reset()
+    pdb.interaction(None, tb)
 
 
 @contextmanager
@@ -242,7 +262,6 @@ def catch_post_mortem(host='', port=5555):
     :type host: str
     :param port: web-UI port
     :type port: int
-    :raises RuntimeError: if there is an active WebPdb instance
     """
     try:
         yield
