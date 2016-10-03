@@ -44,7 +44,7 @@ indicating that a debug session is active. The notification also shows web-UI ho
 .. figure:: https://raw.githubusercontent.com/romanvm/kodi.web-pdb/master/kodi_message.png
   :alt: Kodi notification
 
-  *Notification in Kodi that a Web-PDB debugging session is active*
+  *Notification in Kodi about an active Web-PDB debugging session*
 
 Enter in your the address bar of your browser: ``http://<your Kodi machine hostname or IP>:5555``,
 for example ``http://monty-python:5555``. Use ``127.0.0.1`` or ``localhost`` as hostname
