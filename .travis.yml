@@ -15,9 +15,13 @@ deploy:
     file_glob: true
     file: $RELEASE_ZIP
     skip_cleanup: true
+    on:
+      tags: true
   # Deploy to my Kodi repo
   - provider: script
     skip_cleanup: true
     script: python deploy_addon.py -r
+    on:
+      tags: true
 notifications:
   email: false
