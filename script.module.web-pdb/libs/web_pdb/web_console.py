@@ -115,10 +115,14 @@ class WebConsole(object):
         xbmc.log('Web-PDB: starting web-server on {0}:{1}...'.format(hostname, port),
                  xbmc.LOGNOTICE)
         dialog = DialogProgressBG()
-        dialog.create('Web-PDB', 'Web-UI opened at {0}:{1}...'.format(hostname, port))
-        dialog.update(100)
+        started = False
         while not (self._stop_all.is_set() or kodi_monitor.abortRequested()):
             httpd.handle_request()
+            if not started:
+                xbmc.log('Web-PDB: web-server started.', xbmc.LOGNOTICE)
+                dialog.create('Web-PDB debugger is active', 'Web-UI opened at {0}:{1}...'.format(hostname, port))
+                dialog.update(100)
+                started = True
         httpd.socket.close()
         xbmc.log('Web-PDB: web-server stopped.', xbmc.LOGNOTICE)
         dialog.close()
