@@ -10,3 +10,12 @@ msgstr ""
 msgctxt "#32000"
 msgid "Web-based remote Python debugger:"
 msgstr ""
+
+msgctxt "#32001"
+msgid "Web-PDB debugger is active"
+msgstr ""
+
+# {0} and {1} are web-UI hostname and port respectively
+msgctxt "#32002"
+msgid "Web-UI opened at {0}:{1}"
+msgstr ""

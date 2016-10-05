@@ -36,12 +36,18 @@ except ImportError:
     import Queue as queue
 from wsgiref.simple_server import make_server, WSGIRequestHandler
 import xbmc
+from xbmcaddon import Addon
 from xbmcgui import DialogProgressBG
 from .wsgi_app import app
 
 __all__ = ['WebConsole']
 
 kodi_monitor = xbmc.Monitor()
+addon = Addon()
+
+
+def ui_string(id_):
+    return addon.getLocalizedString(id_).encode('utf-8')
 
 
 class SilentWSGIRequestHandler(WSGIRequestHandler):
@@ -120,7 +126,7 @@ class WebConsole(object):
             httpd.handle_request()
             if not started:
                 xbmc.log('Web-PDB: web-server started.', xbmc.LOGNOTICE)
-                dialog.create('Web-PDB debugger is active', 'Web-UI opened at {0}:{1}...'.format(hostname, port))
+                dialog.create(ui_string(32001), ui_string(32002).format(hostname, port))
                 dialog.update(100)
                 started = True
         httpd.socket.close()
