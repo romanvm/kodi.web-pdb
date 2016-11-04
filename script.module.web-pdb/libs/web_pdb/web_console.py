@@ -43,7 +43,7 @@ from .wsgi_app import app
 __all__ = ['WebConsole']
 
 kodi_monitor = xbmc.Monitor()
-addon = Addon()
+addon = Addon('script.module.web-pdb')
 
 
 def ui_string(id_):

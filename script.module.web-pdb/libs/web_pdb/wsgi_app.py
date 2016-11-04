@@ -27,6 +27,8 @@ Web-UI WSGI application
 
 import json
 import os
+import zlib
+from functools import wraps
 import bottle
 
 __all__ = ['app']
@@ -34,6 +36,24 @@ __all__ = ['app']
 cwd = os.path.dirname(os.path.abspath(__file__))
 bottle.TEMPLATE_PATH.append(os.path.join(cwd, 'templates'))
 static_path = os.path.join(cwd, 'static')
+
+
+def compress(func):
+    """
+    Compress route return data with deflate compression
+
+    zlib.compress is very fast and has negligible performance impact
+    """
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if ('Accept-Encoding' in bottle.request.headers and
+                'deflate' in bottle.request.headers['Accept-Encoding'] and
+                isinstance(result, basestring)):
+            result = zlib.compress(result.encode('utf-8'))
+            bottle.response.add_header('Content-Encoding', 'deflate')
+        return result
+    return wrapper
 
 
 class WebConsoleApp(bottle.Bottle):
@@ -50,11 +70,13 @@ app = WebConsoleApp()
 
 
 @app.route('/')
+@compress
 def root():
     return bottle.template('index')
 
 
 @app.route('/output/<mode>')
+@compress
 def send(mode):
     if app.history.is_dirty or mode == 'history':
         bottle.response.content_type = 'application/json; charset=UTF-8'
