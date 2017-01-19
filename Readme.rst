@@ -19,7 +19,9 @@ Usage
 =====
 
 First you need to install ``script.module.web-pdb`` addon in your Kodi instance where you want to debug your addon.
-An installable ZIP can be downloaded from `Releases`_ tab of this repository.
+The addon can be installed from the Kodi official addon repository:
+**Kodi Add-on repository** > **Program add-ons** > **Web-PDB**.
+Also an installable ZIP can be downloaded from `Releases`_ tab of this repository.
 
 Then include ``script.module.web-pdb`` in your ``addon.xml`` as a dependency:
 
