@@ -20,7 +20,7 @@ deploy:
   # Deploy to my Kodi repo
   - provider: script
     skip_cleanup: true
-    script: python deploy_addon.py -r
+    script: python deploy_addon.py -r -k repo-scripts
     on:
       tags: true
 notifications:
