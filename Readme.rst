@@ -75,8 +75,11 @@ For example:
 
 For more detailed info about the Web-PDB API read docstrings in the ``/libs/web_pdb/__init__.py`` file.
 
-You can also watch this introductory video (courtesy of Michele Lombardo):
+Introductory video (courtesy of Michele Lombardo):
 https://www.youtube.com/watch?v=6gMmeA7UY18
+
+My video tutorial for debugging Python addons for Kodi with Web-PDB:
+https://youtu.be/OukjNpafNZU
 
 License
 =======
