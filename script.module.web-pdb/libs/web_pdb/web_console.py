@@ -26,7 +26,6 @@ File-like web-based input/output console
 """
 
 from __future__ import absolute_import
-import time
 import sys
 import weakref
 from socket import gethostname
@@ -194,7 +193,7 @@ class WebConsole(object):
         i = 0
         while self._history.is_dirty and i <= 5 and not kodi_monitor.abortRequested():
             i += 1
-            time.sleep(0.2)
+            xbmc.sleep(200)
 
     def close(self):
         xbmc.log('Web-PDB: stopping web-server...', xbmc.LOGNOTICE)
