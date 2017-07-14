@@ -17,10 +17,10 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-  # Deploy to my Kodi repo
+  # Submit to the Kodi official repo
   - provider: script
     skip_cleanup: true
-    script: python deploy_addon.py -r -k repo-scripts
+    script: python deploy_addon.py -k repo-scripts -b krypton
     on:
       tags: true
 notifications:
