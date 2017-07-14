@@ -36,6 +36,11 @@ __all__ = ['app']
 cwd = os.path.dirname(os.path.abspath(__file__))
 bottle.TEMPLATE_PATH.append(os.path.join(cwd, 'templates'))
 static_path = os.path.join(cwd, 'static')
+try:
+    string_type = basestring
+except NameError:
+    string_type = (bytes, str)
+    unicode = str
 
 
 def compress(func):
@@ -48,7 +53,7 @@ def compress(func):
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
         if ('deflate' in bottle.request.headers.get('Accept-Encoding', '') and
-                isinstance(result, basestring)):
+                isinstance(result, string_type)):
             if isinstance(result, unicode):
                 result = result.encode('utf-8')
             result = zlib.compress(result)

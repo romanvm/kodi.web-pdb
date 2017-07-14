@@ -26,12 +26,18 @@ File-like web-based input/output console
 """
 
 from __future__ import absolute_import
-import time
+import sys
 import weakref
 from socket import gethostname
 from threading import Thread, Event, RLock
-import Queue as queue
-from SocketServer import ThreadingMixIn
+try:
+    import queue
+except ImportError:
+    import Queue as queue
+try:
+    from socketserver import ThreadingMixIn
+except ImportError:
+    from SocketServer import ThreadingMixIn
 from wsgiref.simple_server import make_server, WSGIServer, WSGIRequestHandler
 import xbmc
 from xbmcaddon import Addon
@@ -157,7 +163,7 @@ class WebConsole(object):
         return [self.readline()]
 
     def writeline(self, data):
-        if isinstance(data, unicode):
+        if sys.version_info[0] == 2 and isinstance(data, unicode):
             data = data.encode('utf-8')
         self._history.contents += data
         try:
@@ -187,7 +193,7 @@ class WebConsole(object):
         i = 0
         while self._history.is_dirty and i <= 5 and not kodi_monitor.abortRequested():
             i += 1
-            time.sleep(0.2)
+            xbmc.sleep(200)
 
     def close(self):
         xbmc.log('Web-PDB: stopping web-server...', xbmc.LOGNOTICE)
