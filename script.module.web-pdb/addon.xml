@@ -12,8 +12,8 @@
   </extension>
   <extension point="xbmc.python.module" library="libs" />
   <extension point="xbmc.addon.metadata">
-    <summary>Web-based remote Python debugger</summary>
-    <description>Provides a web-UI for Python's built-in PDB debugger for remote debugging Kodi addons.</description>
+    <summary lang="en_GB">Web-based remote Python debugger</summary>
+    <description lang="en_GB">Provides a web-UI for Python's built-in PDB debugger for remote debugging Kodi addons.</description>
     <platform>all</platform>
     <license>MIT</license>
     <forum>http://forum.kodi.tv/showthread.php?tid=292141</forum>
