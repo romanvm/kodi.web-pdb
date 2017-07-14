@@ -32,7 +32,10 @@ import sys
 import traceback
 import random
 from contextlib import contextmanager
-from .pdb_py2 import PdbPy2 as Pdb
+if sys.version_info[0] == 2:
+    from .pdb_py2 import PdbPy2 as Pdb
+else:
+    from pdb import Pdb
 import xbmc
 from xbmcgui import Dialog
 from .web_console import WebConsole
