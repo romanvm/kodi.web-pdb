@@ -36,9 +36,9 @@ class PdbPy2(Pdb):
             repr_value = repr(self._getval(arg))
             # Try to convert Unicode string to human-readable form
             try:
-                repr_value = repr_value.decode('raw_unicode_escape').encode('utf-8')
+                repr_value = repr_value.decode('raw_unicode_escape')
             except UnicodeError:
-                pass
+                repr_value = repr_value.decode('utf-8', 'replace')
             print >> self.stdout, repr_value
         except:
             pass
@@ -48,9 +48,9 @@ class PdbPy2(Pdb):
             repr_value = pprint.pformat(self._getval(arg))
             # Try to convert Unicode string to human-readable form
             try:
-                repr_value = repr_value.decode('raw_unicode_escape').encode('utf-8')
+                repr_value = repr_value.decode('raw_unicode_escape')
             except UnicodeError:
-                pass
+                repr_value = repr_value.decode('utf-8', 'replace')
             print >> self.stdout, repr_value
         except:
             pass

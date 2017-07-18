@@ -112,15 +112,23 @@ class WebPdb(Pdb):
         """
         filename = self.curframe.f_code.co_filename
         lines, start_line = inspect.findsource(self.curframe)
+        if sys.version_info[0] == 2:
+            lines = [line.decode('utf-8') for line in lines]
         return {
             'filename': os.path.basename(filename),
-            'listing': ''.join(lines),
+            'listing': u''.join(lines),
             'curr_line': self.curframe.f_lineno,
             'total_lines': len(lines),
             'breaklist': self.get_file_breaks(filename),
         }
 
     def _format_variables(self, raw_vars):
+        """
+        :param raw_vars: a `dict` of `var_name: var_object` pairs
+        :type raw_vars: dict
+        :return: sorted list of variables as a unicode string
+        :rtype: unicode
+        """
         f_vars = []
         for var, value in raw_vars.items():
             if not (var.startswith('__') and var.endswith('__')):
@@ -129,9 +137,9 @@ class WebPdb(Pdb):
                 try:
                     repr_value = repr_value.decode('raw_unicode_escape').encode('utf-8')
                 except UnicodeError:
-                    pass
-                f_vars.append('{0} = {1}'.format(var, repr_value))
-        return '\n'.join(sorted(f_vars))
+                    repr_value = repr_value.decode('utf-8', 'replace')
+                f_vars.append(u'{0} = {1}'.format(var, repr_value))
+        return u'\n'.join(sorted(f_vars))
 
     def get_globals(self):
         """
@@ -141,7 +149,7 @@ class WebPdb(Pdb):
             double underscores ``__`` are not included.
 
         :return: a listing of ``var = value`` pairs sorted alphabetically
-        :rtype: str
+        :rtype: unicode
         """
         return self._format_variables(self.curframe.f_globals)
 
@@ -154,7 +162,7 @@ class WebPdb(Pdb):
             For module scope globals and locals listings are the same.
 
         :return: a listing of ``var = value`` pairs sorted alphabetically
-        :rtype: str
+        :rtype: unicode
         """
         return self._format_variables(self.curframe.f_locals)
 
@@ -163,6 +171,7 @@ class WebPdb(Pdb):
         Detach the debugger from the execution stack
 
         :param frame: the lowest frame to detach the debugger from.
+        :type frame: types.FrameType
         """
         sys.settrace(None)
         if frame is None:
