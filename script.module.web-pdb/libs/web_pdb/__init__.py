@@ -135,7 +135,7 @@ class WebPdb(Pdb):
                 repr_value = repr(value)
                 # Try to convert Unicode string to human-readable form
                 try:
-                    repr_value = repr_value.decode('raw_unicode_escape').encode('utf-8')
+                    repr_value = repr_value.decode('raw_unicode_escape')
                 except UnicodeError:
                     repr_value = repr_value.decode('utf-8', 'replace')
                 f_vars.append('{0} = {1}'.format(var, repr_value))
