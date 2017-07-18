@@ -170,7 +170,6 @@ class WebConsole(object):
         if sys.version_info[0] == 2 and isinstance(data, str):
             data = data.decode('utf-8')
         self._history.contents += data
-        self._history.contents += data
         try:
             self._globals.contents = self._debugger.get_globals()
             self._locals.contents = self._debugger.get_locals()
