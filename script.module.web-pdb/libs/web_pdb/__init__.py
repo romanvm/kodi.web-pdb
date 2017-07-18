@@ -94,10 +94,11 @@ class WebPdb(Pdb):
         This is needed because Kodi does not respect
         daemon threads.
         """
-        if frame.f_back is None and not self.console.closed:
+        if frame.f_back is None:
             self.console.writeline('*** Addon finished ***')
-            self.console.flush()
-            self.console.close()
+            if not self.console.closed:
+                self.console.flush()
+                self.console.close()
         return Pdb.dispatch_return(self, frame, arg)
 
     def get_current_frame_data(self):
