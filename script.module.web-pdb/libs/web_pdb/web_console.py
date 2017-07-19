@@ -123,6 +123,10 @@ class WebConsole(object):
     def encoding(self):
         return 'utf-8'
 
+    @property
+    def closed(self):
+        return self._stop_all.is_set()
+
     def _run_server(self, host, port):
         app.in_queue = self._in_queue
         app.history = self._history
@@ -203,7 +207,3 @@ class WebConsole(object):
         xbmc.log('Web-PDB: stopping web-server...', xbmc.LOGNOTICE)
         self._stop_all.set()
         self._server_thread.join()
-
-    @property
-    def closed(self):
-        return self._stop_all.is_set()
