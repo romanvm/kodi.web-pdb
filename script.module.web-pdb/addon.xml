@@ -4,7 +4,7 @@
        version="1.3.2"
        provider-name="Roman V.M.">
   <requires>
-    <import addon="xbmc.python" version="2.25.0"/>
+    <import addon="xbmc.python" version="2.24.0"/>
     <import addon="script.module.bottle" version="0.12.0"/>
   </requires>
   <extension point="xbmc.python.script" library="main.py">
