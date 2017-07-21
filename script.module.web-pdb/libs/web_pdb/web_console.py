@@ -51,7 +51,7 @@ addon = Addon('script.module.web-pdb')
 
 
 def ui_string(id_):
-    return addon.getLocalizedString(id_).encode('utf-8')
+    return addon.getLocalizedString(id_)
 
 
 class SilentWSGIRequestHandler(WSGIRequestHandler):
