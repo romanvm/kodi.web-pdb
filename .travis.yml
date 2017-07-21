@@ -20,7 +20,7 @@ deploy:
   # Submit to the Kodi official repo
   - provider: script
     skip_cleanup: true
-    script: python deploy_addon.py -k repo-scripts -b jarvis
+    script: python deploy_addon.py -k repo-scripts -b krypton
     on:
       tags: true
 notifications:
