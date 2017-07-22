@@ -50,10 +50,6 @@ kodi_monitor = xbmc.Monitor()
 addon = Addon('script.module.web-pdb')
 
 
-def ui_string(id_):
-    return addon.getLocalizedString(id_)
-
-
 class SilentWSGIRequestHandler(WSGIRequestHandler):
     """WSGI request handler with logging disabled"""
     def log_message(self, format, *args):
@@ -146,7 +142,10 @@ class WebConsole(object):
             httpd.handle_request()
             if not started:
                 xbmc.log('Web-PDB: web-server started.', xbmc.LOGNOTICE)
-                dialog.create(ui_string(32001), ui_string(32002).format(hostname, port))
+                dialog.create(
+                    addon.getLocalizedString(32001),
+                    addon.getLocalizedString(32002).format(hostname, port)
+                )
                 dialog.update(100)
                 started = True
         httpd.socket.close()
