@@ -32,6 +32,8 @@ Then include ``script.module.web-pdb`` in your ``addon.xml`` as a dependency:
     <import addon="script.module.web-pdb" version="1.0"/>
   </requires>
 
+Restart Kodi so that it re-reads addon dependencies.
+
 Insert the following line into your addon code at the point where you want
 to start debugging:
 
