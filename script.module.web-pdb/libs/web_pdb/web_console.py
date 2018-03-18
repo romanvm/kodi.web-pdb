@@ -160,7 +160,7 @@ class WebConsole(object):
             except queue.Empty:
                 continue
         else:
-            data = ''
+            data = '\n'
         self.writeline(data)
         return data
 
