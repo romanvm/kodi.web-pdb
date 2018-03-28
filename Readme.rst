@@ -29,7 +29,7 @@ Then include ``script.module.web-pdb`` in your ``addon.xml`` as a dependency:
 
   <requires>
     ...
-    <import addon="script.module.web-pdb" version="1.0"/>
+    <import addon="script.module.web-pdb" />
   </requires>
 
 Restart Kodi so that it re-reads addon dependencies.
