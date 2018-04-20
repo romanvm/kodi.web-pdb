@@ -277,7 +277,9 @@ def catch_post_mortem(host='', port=5555):
     try:
         yield
     except:
-        xbmc.log('Web-PDB: unhandled exception detected:\n{0}'.format(traceback.format_exc()), xbmc.LOGERROR)
+        xbmc.log('Web-PDB: unhandled exception detected:\n{0}'.format(
+            traceback.format_exc()), xbmc.LOGERROR
+        )
         xbmc.log('Web-PDB: starting post-mortem debugging...', xbmc.LOGERROR)
         Dialog().notification('Web-PDB',
                               'Addon error! Starting post-mortem debugging.',
