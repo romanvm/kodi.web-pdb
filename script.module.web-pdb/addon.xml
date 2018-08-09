@@ -22,6 +22,6 @@
       <icon>icon.png</icon>
       <screenshot>resources/screenshot.png</screenshot>
     </assets>
-    <news>1.4.2: Fixed web UI on some platforms.</news>
+    <news>1.4.2: Fixed web UI on some platforms (Raspberry Pi).</news>
   </extension>
 </addon>
