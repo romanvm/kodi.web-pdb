@@ -8,8 +8,8 @@ install:
   - npm install
 script:
   - npm run build
-  - cd $TRAVIS_BUILD_DIR
 after_success:
+  - cd $TRAVIS_BUILD_DIR
   - echo "SHA1 hashes for minified files:"
   - sha1sum script.module.web-pdb/libs/web_pdb/static/bundle.min.js
   - sha1sum script.module.web-pdb/libs/web_pdb/static/styles.min.js
