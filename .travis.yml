@@ -3,6 +3,8 @@ branches:
     - /\d+\.\d+\.\d+/
 language: python
 python: "3.6"
+env:
+  - ADDON_ID=script.module.web-pdb
 install:
   - cd frontend
   - npm install
@@ -15,7 +17,7 @@ after_success:
   - sha1sum script.module.web-pdb/libs/web_pdb/static/styles.min.css
 before_deploy:
   - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git
-  - submit-addon -z script.module.web-pdb
+  - submit-addon -z $ADDON_ID
   - export RELEASE_ZIP=$(ls *.zip)
 deploy:
   - provider: releases
@@ -27,7 +29,7 @@ deploy:
       tags: true
   # Submit to the Kodi official repo
   - provider: script
-    script: submit-addon -r repo-scripts -b krypton --pull-request script.module.web-pdb
+    script: submit-addon -r repo-scripts -b krypton --pull-request $ADDON_ID
     on:
       tags: true
 notifications:
