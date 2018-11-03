@@ -22,7 +22,6 @@
       <icon>icon.png</icon>
       <screenshot>resources/screenshot.png</screenshot>
     </assets>
-    <news>1.4.3: Replace deflate compression with gzip for web UI endpoints.
-1.4.2: Fixed the web UI on some platforms (Raspberry Pi).</news>
+    <news>1.4.3: Replace deflate compression with gzip for web UI endpoints.</news>
   </extension>
 </addon>
