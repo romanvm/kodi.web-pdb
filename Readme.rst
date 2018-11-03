@@ -83,8 +83,8 @@ https://www.youtube.com/watch?v=6gMmeA7UY18
 My video tutorial for debugging Python addons for Kodi with Web-PDB:
 https://youtu.be/OukjNpafNZU
 
-**Note**: Non-bundled front-end JavaScript/CSS source code is available in
-`Web-PDB`_ repo.
+**Note**: Non-bundled front-end JavaScript/CSS source code is available in the
+``frontend`` directory.
 
 License
 =======
