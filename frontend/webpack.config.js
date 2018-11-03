@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var SRC = path.resolve(__dirname, 'src');
 var BUILD = path.resolve(path.dirname(__dirname),
-                         'script.module.web_pdb',
+                         'script.module.web-pdb',
                          'libs',
                          'web_pdb',
                          'static'
