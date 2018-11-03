@@ -1,13 +1,17 @@
 branches:
   only:
-    - /v\.\d+\.\d+\.\d+/
+    - /\d+\.\d+\.\d+/
 language: python
-python: "2.7"
-install: true
-script: echo "Nothing to build"
+python: "3.6"
+install:
+  - cd frontend
+  - npm install
+script:
+  - npm run build
 before_deploy:
-  - wget https://raw.githubusercontent.com/romanvm/travis_scripts/master/deploy_addon.py
-  - python deploy_addon.py -z
+  - cd $TRAVIS_BUILD_DIR
+  - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git
+  - submit-addon -z script.module.web-pdb
   - export RELEASE_ZIP=$(ls *.zip)
 deploy:
   - provider: releases
@@ -19,8 +23,7 @@ deploy:
       tags: true
   # Submit to the Kodi official repo
   - provider: script
-    skip_cleanup: true
-    script: python deploy_addon.py -k repo-scripts -b krypton
+    script: submit-addon -r repo-scripts -b krypton --pull-request script.module.web-pdb
     on:
       tags: true
 notifications:
