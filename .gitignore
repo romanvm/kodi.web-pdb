@@ -96,3 +96,5 @@ venv/
 .venv/
 *.zip
 *.cmd
+node_modules/
+.vscode/

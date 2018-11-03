@@ -1,0 +1,43 @@
+{
+  "name": "web-pdb",
+  "version": "1.4.0",
+  "description": "Front-end for Web-PDB Python debugger",
+  "scripts": {
+    "build": "webpack -p",
+    "build-dev": "webpack",
+    "watch": "webpack --watch",
+    "lint": "eslint --ext .js src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romanvm/python-web-pdb.git"
+  },
+  "keywords": [
+    "python",
+    "remote",
+    "debugger"
+  ],
+  "author": "Roman Miroshnychenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/romanvm/python-web-pdb/issues"
+  },
+  "homepage": "https://github.com/romanvm/python-web-pdb#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "bootstrap": "^3.3.7",
+    "css-loader": "^0.28.10",
+    "eslint": "^4.18.2",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
+    "jquery": "^3.3.1",
+    "path": "^0.12.7",
+    "prismjs": "^1.11.0",
+    "style-loader": "^0.20.2",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  }
+}
