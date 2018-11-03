@@ -12,7 +12,7 @@ after_success:
   - cd $TRAVIS_BUILD_DIR
   - echo "SHA1 hashes for minified files:"
   - sha1sum script.module.web-pdb/libs/web_pdb/static/bundle.min.js
-  - sha1sum script.module.web-pdb/libs/web_pdb/static/styles.min.js
+  - sha1sum script.module.web-pdb/libs/web_pdb/static/styles.min.css
 before_deploy:
   - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git
   - submit-addon -z script.module.web-pdb
