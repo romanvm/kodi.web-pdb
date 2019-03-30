@@ -11,13 +11,14 @@ install:
 script:
   - npm run build
 after_success:
-  - cd $TRAVIS_BUILD_DIR
+  - cd $TRAVIS_BUILD_DIR/script.module.web-pdb/libs/web_pdb/static
   - echo "SHA1 hashes for minified files:"
-  - sha1sum script.module.web-pdb/libs/web_pdb/static/bundle.min.js
-  - sha1sum script.module.web-pdb/libs/web_pdb/static/styles.min.css
+  - sha1sum bundle.min.js | tee bundle.min.js.sha1
+  - sha1sum styles.min.css | tee styles.min.css.sha1
 before_deploy:
+  - cd $TRAVIS_BUILD_DIR
   - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git
-  - submit-addon -z $ADDON_ID
+  - submit-addon -s -z $ADDON_ID
   - export RELEASE_ZIP=$(ls *.zip)
 deploy:
   - provider: releases
@@ -29,7 +30,7 @@ deploy:
       tags: true
   # Submit to the Kodi official repo
   - provider: script
-    script: submit-addon -r repo-scripts -b krypton --pull-request $ADDON_ID
+    script: submit-addon -r repo-scripts -b krypton -s --pull-request $ADDON_ID
     on:
       tags: true
 notifications:
