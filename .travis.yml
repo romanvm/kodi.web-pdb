@@ -15,8 +15,10 @@ after_success:
   - echo "SHA1 hashes for minified files:"
   - sha1sum bundle.min.js | tee bundle.min.js.sha1
   - sha1sum styles.min.css | tee styles.min.css.sha1
-before_deploy:
   - cd $TRAVIS_BUILD_DIR
+  - git add .
+  - git commit -m "Add compiled static files"
+before_deploy:
   - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git
   - submit-addon -s -z $ADDON_ID
   - export RELEASE_ZIP=$(ls *.zip)
