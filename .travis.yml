@@ -12,9 +12,9 @@ script:
   - npm run build
 after_success:
   - cd $TRAVIS_BUILD_DIR/script.module.web-pdb/libs/web_pdb/static
-  - echo "SHA1 hashes for minified files:"
-  - sha1sum bundle.min.js | tee bundle.min.js.sha1
-  - sha1sum styles.min.css | tee styles.min.css.sha1
+  - echo "SHA256 hashes for minified files:"
+  - sha256sum bundle.min.js | tee bundle.min.js.sha256
+  - sha256sum styles.min.css | tee styles.min.css.sha256
   - cd $TRAVIS_BUILD_DIR
   - git add .
   - git commit -m "Add compiled static files"
