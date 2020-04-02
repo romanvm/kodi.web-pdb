@@ -12,6 +12,7 @@ install:
   - npm install
 script:
   - npm run build
+  - cd $TRAVIS_BUILD_DIR
   - kodi-addon-checker --branch $BRANCH $ADDON_ID
 after_success:
   - cd $TRAVIS_BUILD_DIR/script.module.web-pdb/libs/web_pdb/static
