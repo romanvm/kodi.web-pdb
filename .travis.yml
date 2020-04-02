@@ -19,7 +19,7 @@ after_success:
   - git add .
   - git commit -m "Add compiled static files"
 before_deploy:
-  - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git
+  - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git@matrix
   - submit-addon -s -z $ADDON_ID
   - export RELEASE_ZIP=$(ls *.zip)
 deploy:
@@ -32,7 +32,7 @@ deploy:
       tags: true
   # Submit to the Kodi official repo
   - provider: script
-    script: submit-addon -r repo-scripts -b krypton -s --pull-request $ADDON_ID
+    script: submit-addon -r repo-scripts -b krypton -s -m --pull-request $ADDON_ID
     on:
       tags: true
 notifications:
