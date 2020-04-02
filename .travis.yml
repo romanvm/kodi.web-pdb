@@ -5,7 +5,7 @@ language: python
 python: "3.6"
 env:
   - ADDON_ID=script.module.web-pdb
-  - BRANCH=krypton
+    BRANCH=krypton
 install:
   - pip install kodi-addon-checker
   - cd frontend
