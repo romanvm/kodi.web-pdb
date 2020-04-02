@@ -5,11 +5,14 @@ language: python
 python: "3.6"
 env:
   - ADDON_ID=script.module.web-pdb
+  - BRANCH=krypton
 install:
+  - pip install kodi-addon-checker
   - cd frontend
   - npm install
 script:
   - npm run build
+  - kodi-addon-checker --branch $BRANCH $ADDON_ID
 after_success:
   - cd $TRAVIS_BUILD_DIR/script.module.web-pdb/libs/web_pdb/static
   - echo "SHA256 hashes for minified files:"
@@ -32,7 +35,7 @@ deploy:
       tags: true
   # Submit to the Kodi official repo
   - provider: script
-    script: submit-addon -r repo-scripts -b krypton -s -m --pull-request $ADDON_ID
+    script: submit-addon -r repo-scripts -b $BRANCH -s -m --pull-request $ADDON_ID
     on:
       tags: true
 notifications:
