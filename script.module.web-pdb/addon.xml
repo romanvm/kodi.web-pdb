@@ -20,7 +20,7 @@
     <source>https://github.com/romanvm/kodi.web-pdb</source>
     <assets>
       <icon>icon.png</icon>
-      <screenshot>resources/screenshot.png</screenshot>
+      <screenshot>resources/screenshot.jpg</screenshot>
     </assets>
     <news>1.5.3: Fix a rare issue when a debugger session cannot be started.</news>
   </extension>
