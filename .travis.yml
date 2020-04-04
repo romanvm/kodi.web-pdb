@@ -20,10 +20,9 @@ after_success:
   - sha256sum bundle.min.js | tee bundle.min.js.sha256
   - sha256sum styles.min.css | tee styles.min.css.sha256
   - cd $TRAVIS_BUILD_DIR
-  - git add .
-  - git commit -m "Add compiled static files"
+  - git commit -a -m "Add compiled static files"
 before_deploy:
-  - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git@matrix
+  - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git
   - submit-addon -s -z $ADDON_ID
   - export RELEASE_ZIP=$(ls *.zip)
 deploy:
