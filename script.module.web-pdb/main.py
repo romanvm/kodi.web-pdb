@@ -27,5 +27,5 @@ from xbmcgui import Dialog
 
 Dialog().ok(
     'Web-PDB',
-    Addon().getLocalizedString(32000) + '[CR]github.com/romanvm/kodi.web-pdb'
+    Addon().getLocalizedString(32000)
 )
