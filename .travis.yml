@@ -7,7 +7,7 @@ env:
   - ADDON_ID=script.module.web-pdb
     BRANCH=krypton
 install:
-  - pip install kodi-addon-checker
+  - pip install -q kodi-addon-checker
   - cd frontend
   - npm install
 script:
@@ -23,7 +23,7 @@ after_success:
   - git add .
   - git commit -m "Add compiled static files"
 before_deploy:
-  - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git@matrix
+  - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git
   - submit-addon -s -z $ADDON_ID
   - export RELEASE_ZIP=$(ls *.zip)
 deploy:
