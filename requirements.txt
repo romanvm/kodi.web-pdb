@@ -1,2 +1,2 @@
-Kodistubs
+git+https://github.com/romanvm/Kodistubs.git@matrix
 bottle
