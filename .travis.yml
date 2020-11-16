@@ -23,7 +23,7 @@ after_success:
   - git commit -m "Add compiled static files"
   - cd $TRAVIS_BUILD_DIR
 before_deploy:
-  - pip install -q git+https://github.com/romanvm/kodi-addon-submitter.git
+  - pip install -q git+https://github.com/xbmc/kodi-addon-submitter.git
   - submit-addon -s -z $ADDON_ID
   - export RELEASE_ZIP=$(ls *.zip)
 deploy:
