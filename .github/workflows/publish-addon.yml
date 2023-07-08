@@ -36,6 +36,8 @@ jobs:
           sha256sum bundle.min.js | tee bundle.min.js.sha256
           sha256sum styles.min.css | tee styles.min.css.sha256
           cd $GITHUB_WORKSPACE
+          git config user.name "$GITHUB_REPOSITORY_OWNER"
+          git config user.email "roman1972@gmail.com"
           git add .
           git commit -m "Add compiled static files"
 
