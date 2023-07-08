@@ -22,7 +22,7 @@
       <icon>icon.png</icon>
       <screenshot>resources/screenshot.jpg</screenshot>
     </assets>
-    <news>- 1.6.0: Dropped Python 2 compatibility.
-- 1.5.6: Fixed not being able to assign a local variable via the debugger console.</news>
+    <news>- 1.6.2: Various internal changes.
+- 1.6.0: Dropped Python 2 compatibility.</news>
   </extension>
 </addon>
