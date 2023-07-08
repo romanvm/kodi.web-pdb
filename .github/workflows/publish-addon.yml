@@ -64,7 +64,7 @@ jobs:
         pip install -q git+https://github.com/xbmc/kodi-addon-submitter.git
     - name: Submit addon
       run: |
-        submit-addon -r repo-scrapers -b matrix -s --pull-request script.module.web-pdb
+        submit-addon -r repo-scripts -b matrix -s --pull-request script.module.web-pdb
       env:
         GH_USERNAME: romanvm
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
