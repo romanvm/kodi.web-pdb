@@ -58,7 +58,7 @@ jobs:
         pip install -q kodi-addon-checker
     - name: Check with addon-checker
       run: |
-        kodi-addon-checker --branch matrix
+        kodi-addon-checker --branch matrix script.module.web-pdb
     - name: Install addon submitter
       run: |
         pip install -q git+https://github.com/xbmc/kodi-addon-submitter.git
