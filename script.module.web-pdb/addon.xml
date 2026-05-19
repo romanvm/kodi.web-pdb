@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.module.web-pdb"
        name="Web-PDB"
-       version="1.6.3"
+       version="2.0.0"
        provider-name="Roman V.M.">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
@@ -20,8 +20,11 @@
     <source>https://github.com/romanvm/kodi.web-pdb</source>
     <assets>
       <icon>icon.png</icon>
-      <screenshot>resources/screenshot.jpg</screenshot>
+      <screenshot>resources/screenshots/web-pdb-light-mode.png</screenshot>
+      <screenshot>resources/screenshots/web-pdb-dark-mode.png</screenshot>
     </assets>
-    <news>- 1.6.3: Sync changes with the upstream library version.</news>
+    <news>- 2.0.0:
+- Reworked web UI.
+- Internal changes.</news>
   </extension>
 </addon>

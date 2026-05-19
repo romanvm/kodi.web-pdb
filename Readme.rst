@@ -3,17 +3,24 @@ script.module.web-pdb
 
 ``script.module.web-pdb`` is a port of my `Web-PDB`_ Python package modified for using in `Kodi mediacenter`_.
 It is a web-interface for Python's built-in `PDB`_ debugger that can be used for remote debugging of
-Python addons *in vivo*, that is, while running inside Kodi.
+Python addons that are running inside Kodi.
 Except for modifications needed to run inside Kodi, all other Web-PDB/PDB functionality is left intact
 so you can use all available documentation and tutorials for the PDB debugger
 to learn how to debug your Python code.
 
-.. figure:: https://raw.githubusercontent.com/romanvm/python-web-pdb/master/screenshot.png
+.. figure:: https://raw.githubusercontent.com/romanvm/python-web-pdb/master/web-pdb-light-mode.png
   :alt: Web-PDB screenshot
-  :width: 640px
-  :height: 490px
+  :width: 800px
+  :height: 450px
 
-  *Web-PDB console in Chrome browser*
+  *Web-PDB UI light mode*
+
+.. figure:: https://raw.githubusercontent.com/romanvm/python-web-pdb/master/web-pdb-dark-mode.png
+  :alt: Web-PDB screenshot
+  :width: 800px
+  :height: 450px
+
+  *Web-PDB UI dark mode*
 
 Usage
 =====
@@ -95,7 +102,7 @@ The debugger icon made by `Freepik`_ from `www.flaticon.com`_ is licensed by `CC
 
 .. _Web-PDB: https://github.com/romanvm/python-web-pdb
 .. _Kodi mediacenter: https://kodi.tv
-.. _PDB: https://docs.python.org/2/library/pdb.html
+.. _PDB: https://docs.python.org/3/library/pdb.html
 .. _Releases: https://github.com/romanvm/kodi.web-pdb/releases
 .. _Freepik: http://www.freepik.com
 .. _www.flaticon.com: http://www.flaticon.com
