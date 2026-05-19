@@ -5,7 +5,6 @@
        provider-name="Roman V.M.">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
-    <import addon="script.module.bottle" />
   </requires>
   <extension point="xbmc.python.script" library="main.py">
     <provides>executable</provides>
