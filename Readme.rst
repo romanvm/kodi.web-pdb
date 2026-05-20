@@ -93,6 +93,14 @@ https://youtu.be/OukjNpafNZU
 **Note**: Non-bundled front-end JavaScript/CSS source code is available in the
 ``frontend`` directory.
 
+Implementation Details
+======================
+
+Web-PDB uses a custom asynchronous HTTP server based on ``asyncio`` library that runs in a separate thread.
+If your addon uses ``asyncio`` library, check `this article on Kodi Wiki`_.
+
+Starting from v2.0, Web-PDB Python backend has no external dependencies, except for Python Standard Library.
+
 License
 =======
 
@@ -107,3 +115,4 @@ The debugger icon made by `Freepik`_ from `www.flaticon.com`_ is licensed by `CC
 .. _Freepik: http://www.freepik.com
 .. _www.flaticon.com: http://www.flaticon.com
 .. _CC 3.0 BY: http://creativecommons.org/licenses/by/3.0/
+.. _this article on Kodi Wiki: https://kodi.wiki/view/Python_Problems#asyncio
