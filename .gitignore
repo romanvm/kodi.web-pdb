@@ -98,3 +98,4 @@ venv/
 *.cmd
 node_modules/
 .vscode/
+.tokensave/
