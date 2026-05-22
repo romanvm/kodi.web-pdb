@@ -38,7 +38,8 @@ jobs:
           cd $GITHUB_WORKSPACE
           git config user.name "$GITHUB_REPOSITORY_OWNER"
           git config user.email "roman1972@gmail.com"
-          git add .
+          git add script.module.web-pdb/libs/web_pdb/static/bundle.min.js.sha256
+          git add script.module.web-pdb/libs/web_pdb/static/styles.min.css.sha256
           git commit -m "Add compiled static files"
 
   publish:
